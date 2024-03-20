@@ -14,6 +14,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -57,7 +59,7 @@ public class TestAddStudent {
         this.service.addStudent(newStudent1);
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
         this.service.addStudent(newStudent3);
-        var students = this.service.getAllStudenti().iterator();
+        Iterator<Student> students = this.service.getAllStudenti().iterator();
         assertEquals(students.next(), newStudent1);
         assertEquals(students.next(), newStudent3);
 
@@ -71,7 +73,7 @@ public class TestAddStudent {
         Student newStudent2 = new Student("1111211", "", 100, "aa");
         Student newStudent3 = new Student("1111211", null, 100, "aa");
         this.service.addStudent(newStudent1);
-        var students = this.service.getAllStudenti().iterator();
+        Iterator<Student> students = this.service.getAllStudenti().iterator();
         assertEquals(students.next(), newStudent1);
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent3));
