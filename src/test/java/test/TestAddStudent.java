@@ -59,7 +59,6 @@ public class TestAddStudent {
         this.service.addStudent(newStudent3);
         var students = this.service.getAllStudenti().iterator();
         assertEquals(students.next(), newStudent1);
-//        assertEquals(students.next(), newStudent2);
         assertEquals(students.next(), newStudent3);
 
         this.service.deleteStudent("123");
