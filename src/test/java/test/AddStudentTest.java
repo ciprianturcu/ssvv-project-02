@@ -19,7 +19,7 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestAddStudent {
+public class AddStudentTest {
     private StudentXMLRepo studentFileRepository;
     private StudentValidator studentValidator;
     private Service service;
