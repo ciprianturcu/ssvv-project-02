@@ -67,7 +67,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_EmptyId() {
+    public void testAddAssignmentEmptyId() {
         Tema newTema = new Tema("", "a", 1, 1);
 
         try {
@@ -79,7 +79,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_NullId() {
+    public void testAddAssignmentNullId() {
         Tema newTema = new Tema(null, "a", 1, 1);
 
         try {
@@ -91,7 +91,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_EmptyDescription() {
+    public void testAddAssignmentEmptyDescription() {
         Tema newTema = new Tema("2", "", 1, 1);
 
         try {
@@ -103,7 +103,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_DeadlineLessThan1() {
+    public void testAddAssignmentDeadlineLessThan1() {
         Tema newTema = new Tema("3", "a", 0, 1);
 
         try {
@@ -116,8 +116,8 @@ public class AssignmentTest
 
 
     @Test
-    public void testAddAssignment_DeadlineGreaterThan14() {
-        Tema newTema = new Tema("4", "a", 15, 1);
+    public void testAddAssignmentDeadlineGreaterThan14() {
+        Tema newTema = new Tema("4", "a", 20, 1);
 
         try {
             this.service.addTema(newTema);
@@ -128,8 +128,8 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_ReceiveGreaterThan14() {
-        Tema newTema = new Tema("5", "a", 1, 15);
+    public void testAddAssignmentReceiveGreaterThan14() {
+        Tema newTema = new Tema("5", "a", 1, 20);
 
         try {
             this.service.addTema(newTema);
@@ -140,8 +140,8 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignment_ReceiveLessThan1() {
-        Tema newTema = new Tema("6", "a", 1, 0);
+    public void testAddAssignmentReceiveLessThan1() {
+        Tema newTema = new Tema("6", "a", 1, -1);
 
         try {
             this.service.addTema(newTema);
