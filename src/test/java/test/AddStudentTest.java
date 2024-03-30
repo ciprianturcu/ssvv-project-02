@@ -51,7 +51,7 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentDuplicate() {
-        Student newStudent1 = new Student("1", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("1", "maria", 937, "maria@gmail.com");
 
         Student stud1 = this.service.addStudent(newStudent1);
         assertNull(stud1);
@@ -64,8 +64,8 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentNonDuplicate() {
-        Student newStudent1 = new Student("1", "Ana", 937, "ana@gmail.com");
-        Student newStudent2 = new Student("2", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("1", "maria", 937, "maria@gmail.com");
+        Student newStudent2 = new Student("2", "maria", 937, "maria@gmail.com");
 
 
         Student stud1 = this.service.addStudent(newStudent1);
@@ -84,7 +84,7 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentValidName() {
-        Student newStudent1 = new Student("1", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("1", "maria", 937, "maria@gmail.com");
         this.service.addStudent(newStudent1);
         Iterator<Student> students = this.service.getAllStudenti().iterator();
         assertEquals(students.next().getID(), newStudent1.getID());
@@ -93,21 +93,21 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentEmptyName() {
-        Student newStudent2 = new Student("2", "", 937, "ana@gmail.com");
+        Student newStudent2 = new Student("2", "", 937, "maria@gmail.com");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
 
     }
 
     @Test
     public void testAddStudentNullName() {
-        Student newStudent3 = new Student("3", null, 937, "ana@gmail.com");
+        Student newStudent3 = new Student("3", null, 937, "maria@gmail.com");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent3));
     }
 
 
     @Test
     public void testAddStudentValidGroup() {
-        Student newStudent1 = new Student("1", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("1", "maria", 937, "maria@gmail.com");
 
         this.service.addStudent(newStudent1);
         Iterator<Student> students = this.service.getAllStudenti().iterator();
@@ -118,13 +118,13 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentInvalidGroup() {
-        Student newStudent2 = new Student("2", "Ana", -6, "ana@gmail.com");
+        Student newStudent2 = new Student("2", "maria", -6, "maria@gmail.com");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
     }
 
     @Test
     public void testAddStudentValidEmail() {
-        Student newStudent1 = new Student("1", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("1", "maria", 937, "maria@gmail.com");
         this.service.addStudent(newStudent1);
         Iterator<Student> students = this.service.getAllStudenti().iterator();
         assertEquals(students.next().getID(), newStudent1.getID());
@@ -133,19 +133,19 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentEmptyEmail() {
-        Student newStudent2 = new Student("2", "Ana", 937, "");
+        Student newStudent2 = new Student("2", "maria", 937, "");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
     }
 
     @Test
     public void testAddStudentNullEmail() {
-        Student newStudent3 = new Student("3", "Ana", 937, null);
+        Student newStudent3 = new Student("3", "maria", 937, null);
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent3));
     }
 
     @Test
     public void testAddStudentValidId() {
-        Student newStudent1 = new Student("2345", "Ana", 937, "ana@gmail.com");
+        Student newStudent1 = new Student("2345", "maria", 937, "maria@gmail.com");
         this.service.addStudent(newStudent1);
         Iterator<Student> students = this.service.getAllStudenti().iterator();
         assertEquals(students.next().getID(), newStudent1.getID());
@@ -154,13 +154,13 @@ public class AddStudentTest {
 
     @Test
     public void testAddStudentEmptyId() {
-        Student newStudent2 = new Student("", "Ana", 937, "ana@gmail.com");
+        Student newStudent2 = new Student("", "maria", 937, "maria@gmail.com");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent2));
     }
 
     @Test
     public void testAddStudentNullId() {
-        Student newStudent3 = new Student(null, "Ana", 937, "ana@gmail.com");
+        Student newStudent3 = new Student(null, "maria", 937, "maria@gmail.com");
         assertThrows(ValidationException.class, () -> this.service.addStudent(newStudent3));
     }
 
