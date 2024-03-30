@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddStudentTest {
+public class StudentTest {
     private StudentXMLRepo studentFileRepository;
     private StudentValidator studentValidator;
     private Service service;
