@@ -1,10 +1,8 @@
 package test;
 
 import domain.Tema;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.jupiter.api.*;
 import repository.TemaXMLRepo;
 import service.Service;
 import validation.TemaValidator;
@@ -14,28 +12,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit test for simple App.
  */
-public class AssignmentTest
-{
+public class AssignmentTest {
     private TemaXMLRepo xmlRepo;
+    private TemaValidator temaValidator;
     private Service service;
 
     @BeforeAll
     static void createXML() {
         File xml = new File("fisiere/test-teme.xml");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(xml))) {
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                    "<inbox>\n" +
-                    "\n" +
-                    "</inbox>");
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" + "<inbox>\n" + "\n" + "</inbox>");
             writer.flush();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -43,28 +36,26 @@ public class AssignmentTest
     @BeforeEach
     public void setup() {
         this.xmlRepo = new TemaXMLRepo("fisiere/test-teme.xml");
-        this.service = new Service(
-                null,
-                null,
-                this.xmlRepo,
-                new TemaValidator(),
-                null,
-                null);
+        this.temaValidator = new TemaValidator();
+        this.service = new Service(null, null, this.xmlRepo, this.temaValidator, null, null);
     }
 
-    @AfterAll
-    static void removeXML() {
+    @AfterEach
+    void removeXML() {
         new File("fisiere/test-teme.xml").delete();
     }
 
     @Test
-    public void testAddAssignmentSuccess() {
-        Tema newTema = new Tema("188", "a", 3, 1);
-
-        this.service.addTema(newTema);
-
-        assertEquals(newTema, this.xmlRepo.findOne("188"));
+    public void testAddAssignmentDuplicateAssignment() {
+        Tema newTema = new Tema("1", "a", 6, 8);
+        Tema newTema2 = new Tema("1", "a", 6, 8);
+        try {
+            this.service.addTema(newTema);
+            assertEquals(this.service.addTema(newTema2).getID(), newTema.getID());
+        }
+        catch (Exception e) {fail();}
     }
+
 
     @Test
     public void testAddAssignmentEmptyId() {
@@ -92,7 +83,7 @@ public class AssignmentTest
 
     @Test
     public void testAddAssignmentEmptyDescription() {
-        Tema newTema = new Tema("2", "", 1, 1);
+        Tema newTema = new Tema("1", "", 1, 1);
 
         try {
             this.service.addTema(newTema);
@@ -103,8 +94,8 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAddAssignmentDeadlineLessThan1() {
-        Tema newTema = new Tema("3", "a", 0, 1);
+    public void testAddAssignmentDeadlineGreaterThan14() {
+        Tema newTema = new Tema("1", "a", 15, 1);
 
         try {
             this.service.addTema(newTema);
@@ -113,11 +104,10 @@ public class AssignmentTest
             assertEquals(e.getMessage(), "Deadlineul trebuie sa fie intre 1-14.");
         }
     }
-
 
     @Test
-    public void testAddAssignmentDeadlineGreaterThan14() {
-        Tema newTema = new Tema("4", "a", 20, 1);
+    public void testAddAssignmentDeadlineLessThan1() {
+        Tema newTema = new Tema("1", "a", 0, 1);
 
         try {
             this.service.addTema(newTema);
@@ -126,10 +116,11 @@ public class AssignmentTest
             assertEquals(e.getMessage(), "Deadlineul trebuie sa fie intre 1-14.");
         }
     }
+
 
     @Test
     public void testAddAssignmentReceiveGreaterThan14() {
-        Tema newTema = new Tema("5", "a", 1, 20);
+        Tema newTema = new Tema("1", "a", 1, 15);
 
         try {
             this.service.addTema(newTema);
@@ -141,7 +132,7 @@ public class AssignmentTest
 
     @Test
     public void testAddAssignmentReceiveLessThan1() {
-        Tema newTema = new Tema("6", "a", 1, -1);
+        Tema newTema = new Tema("1", "a", 1, 0);
 
         try {
             this.service.addTema(newTema);
@@ -152,13 +143,16 @@ public class AssignmentTest
     }
 
     @Test
-    void testAddAssignmentDuplicateAssignment() {
-        Tema newTema = new Tema("1", "a", 1, 1);
-        this.service.addTema(newTema);
+    public void testAddAssignmentSuccess() {
+        Tema newTema = new Tema("1", "a", 6, 7);
 
-        Tema newTema2 = new Tema("1", "a", 1, 1);
-
-        assertEquals(this.service.addTema(newTema2).getID(), newTema.getID());
+        try {
+            Tema result = this.service.addTema(newTema);
+            assertNull(result);
+            assertEquals(newTema, this.service.getAllTeme().iterator().next());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 }
