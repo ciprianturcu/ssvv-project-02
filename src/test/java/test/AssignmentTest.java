@@ -59,11 +59,11 @@ public class AssignmentTest
 
     @Test
     public void testAddAssignmentSuccess() {
-        Tema newTema = new Tema("1", "a", 1, 1);
+        Tema newTema = new Tema("188", "a", 3, 1);
 
         this.service.addTema(newTema);
 
-        assertEquals(newTema, this.xmlRepo.findOne("1"));
+        assertEquals(newTema, this.xmlRepo.findOne("188"));
     }
 
     @Test
